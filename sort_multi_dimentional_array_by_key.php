@@ -20,7 +20,7 @@ $data = array(
 );
 
 $keys = array_column($data, 'age');
-array_multisort($keys, SORT_ASC, $data);
+array_multisort($keys, SORT_ASC, $data); //SORT_DESC
 
 /*
 Array

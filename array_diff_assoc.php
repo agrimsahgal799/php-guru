@@ -18,7 +18,7 @@ $result1 = array_values($result1);
 /*
     Array
     (
-        [2] => 5
-        [4] => 2
+        [0] => 5
+        [1] => 2
     )
 */

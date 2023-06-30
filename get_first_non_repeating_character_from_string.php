@@ -1,13 +1,15 @@
 <?php
-/*  If there is a string whitch contain only alphabetic characters and spaces, and return the first non-repeating character.
-	For example: if str is "agettkgaeee" then your program should return k.
-	The string will always contain at least one character and there will always be at least one non-repeating character.
+
+/*  
+If there is a string whitch contain only alphabetic characters and spaces, and return the first non-repeating character.
+For example: if str is "agettkgaeee" then your program should return k.
+The string will always contain at least one character and there will always be at least one non-repeating character.
 	
-	input  : "abcdef"
-	output : a
+input  : "abcdef"
+output : a
 	
-	input  : "agettkgaeee";
-	output : k
+input  : "agettkgaeee";
+output : k
 */
 
 function not_repeated_character($char){

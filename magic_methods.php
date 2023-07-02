@@ -51,3 +51,23 @@ class MagicMethod{
 $obj = new MagicMethod();
 $obj->myCall('agrim','sahgal');
 echo $obj;
+
+/* 
+
+__constuct
+__constuct magic method is called
+
+__call
+method name : myCall
+Array
+(
+    [0] => agrim
+    [1] => sahgal
+)
+__toString
+you are using this class MagicMethod object as a string.
+
+__destruct
+__destruct magic method is called
+
+*/

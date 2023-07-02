@@ -54,20 +54,21 @@ echo $obj;
 
 /* 
 
-__constuct
+1. __constuct
 __constuct magic method is called
 
-__call
+2. __call
 method name : myCall
 Array
 (
     [0] => agrim
     [1] => sahgal
 )
-__toString
+
+3. __toString
 you are using this class MagicMethod object as a string.
 
-__destruct
+4. __destruct
 __destruct magic method is called
 
 */

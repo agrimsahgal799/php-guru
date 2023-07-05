@@ -1,0 +1,36 @@
+# String data types in the MySQL column
+1. CHAR
+2. VARCHAR
+3. BINARY
+4. VARBINARY
+5. BLOB
+6. TEXT
+7. ENUM
+8. SET
+
+# Set unique key in the MySql column
+ALTER TABLE `contacts` ADD UNIQUE(phone);
+
+# Remove unique key from the MySql column
+ALTER TABLE `contacts` DROP INDEX `phone`;
+
+# Select unique column from MySQL column
+SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS TC
+WHERE TC.TABLE_NAME = 'my_table'
+AND TC.CONSTRAINT_TYPE = 'UNIQUE'
+
+# difference between Primary Key and Unique Key
+1. The primary key is a unique of not-null key that uniquely identifies every record in that table or relationship. The primary key also called a minimal super key.
+The unique key is a single column or combination of columns in a table to uniquely identify database records. The unique key also called unique contraints and can be referenced by another table's foreign key.
+
+2. The primary key column cannot store duplicate values that mean primary key columns values are always unique.
+The unique key prevents storing duplicate values in the column. A table can contain multiple unique key columns, unlike a primary key column.
+
+3. A primary key can not contain NULL values, whereas a unique key can have NULL values, but only one NULL in allowed in a table.
+
+# difference between Primary Key and Candidate Key
+1. The primary key is a unique of not-null key that uniquely identifies every record in that table or relationship. It is also a unique key to identify records in relation or table uniquely.
+
+2. A table or relation can contain only one primary key. A table or relation can have more than one candidate key.
+
+3. A primary key can not contain NULL values, whereas a candidate key can have NULL values.

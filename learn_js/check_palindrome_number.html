@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Check The number is palindrome or not</title>
+        <style>
+            
+        </style>
+        <script>
+            
+        </script>
+    </head>
+    <body>
+        <script>
+            /*
+                A number is said to be palindrome if it remains same after reversing the digits or letters respectively.
+                Ex. 3663, 1100011, MALAYALAM
+            */
+
+            function checkPalindrome(n){
+                console.log(n);
+                /* 3663 => 3663 */ 
+				var isPalindrome = false;
+                /* loop through start to end */
+                for(var i = 0; i<n.length; i++){
+                    /* loop through end to start */
+                    for(var j = (n.length)-1; j>=0; j--){
+					
+						if( n.charAt(j) == n.charAt(i) ){
+							isPalindrome = true;
+						}
+						else{
+							isPalindrome = false;
+						}
+                    }
+                }
+				return isPalindrome;
+            }
+
+            // prompt is a javescript built in function that are using to take input
+            let number = prompt("Please enter number or string");
+			if(number!=''){
+				console.log(number);
+
+				/* Check for palindrome number */
+				let isPalindromeNum = checkPalindrome(number);
+				if(isPalindromeNum){
+					alert(number + ' is a palindrome number.');
+				}
+				else{
+					alert(number + ' is not a palindrome number.');
+				}
+			}
+			else{
+				alert('Please enter number or string');
+			}
+
+        </script>
+    </body>
+</html>

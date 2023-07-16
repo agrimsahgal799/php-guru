@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Create a web page using JavaScript</title>
+    </head>
+    <body>
+        <script>
+			document.body.style.margin = '0px';
+			document.body.style.padding = '20px';
+		
+            var h = document.createElement('header');
+			document.body.appendChild(h);
+			h.innerHTML = 'Header';
+			document.querySelector('header').setAttribute('class','small_div');
+			
+			var l_aside = document.createElement('aside');
+			document.body.appendChild(l_aside);
+			l_aside.innerHTML = "Aside 1";
+			
+			var section = document.createElement('section');
+			document.body.appendChild(section);
+			section.innerHTML = 'Section';
+			section.style.display = 'inline-block';
+			section.style.width = '47%';
+			section.style.height = '400px';
+			section.style.lineHeight = '400px'; 
+			section.style.border = '2px solid #999';
+			section.style.textAlign = 'center';
+			section.style.color = 'green';
+			section.style.fontSize = '2em';
+			section.style.marginBottom = '10px';
+			section.style.marginLeft = '13px';
+			section.style.marginRight = '13px';
+			
+			var r_aside = document.createElement('aside');
+			document.body.appendChild(r_aside);
+			r_aside.innerHTML = "Aside 2";
+			
+			//document.querySelector('aside').setAttribute('class','aside_div');
+			
+			var asides = document.getElementsByTagName('aside');
+			for(s=0; s<asides.length; s++){
+				asides[s].setAttribute('class','aside_div');
+			}
+			
+			var f = document.createElement('footer');
+			document.body.appendChild(f);
+			f.innerHTML = 'Footer';
+			document.querySelector('footer').setAttribute('class','small_div');
+			
+			var sd = document.querySelectorAll('.small_div');
+			for(let i = 0; i<sd.length; i++){
+				sd[i].style.color = 'green';
+				sd[i].style.fontSize = '2em';
+				sd[i].style.marginBottom = '10px';
+				sd[i].style.border = '2px solid #999';
+				sd[i].style.textAlign = 'center';
+				sd[i].style.width = '100%';
+				sd[i].style.height = '80px';
+				sd[i].style.lineHeight = '80px';
+			}
+			
+			var asd = document.querySelectorAll('.aside_div');
+			for(let j = 0; j<asd.length; j++){
+				asd[j].style.color = 'green';
+				asd[j].style.fontSize = '2em';
+				asd[j].style.marginBottom = '10px';
+				asd[j].style.border = '2px solid #999';
+				asd[j].style.textAlign = 'center';
+				asd[j].style.width = '25%';
+				asd[j].style.height = '400px';
+				asd[j].style.lineHeight = '400px';
+				asd[j].style.display = 'inline-block';
+			}
+			
+        </script>
+    </body>
+</html>

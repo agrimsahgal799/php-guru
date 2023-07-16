@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Html localStorage Example</title>
+        <script>
+            
+        </script>
+    </head>
+    <body>
+		<form onsubmit="return formSubmit();">
+			<input id="val1" type="text" name="val1" placeholder="Enter value 1">
+			<input data-val2="val2" type="text" name="val2" placeholder="Enter value 2">
+			<button type="submit">Submit</button>
+		</form>
+        <script>
+            function formSubmit(){
+				
+				var value1 = document.getElementById('val1').value;
+				var value2 = document.querySelector('[data-val2="val2"]').value;
+				var total = parseInt(value1) + parseInt(value2);
+				console.log('total', total);
+				
+				localStorage.setItem('total',total);
+				//localStorage.removeItem('total');
+				
+				return false;
+			}
+			//var getTotal = localStorage.getItem('total');
+			
+        </script>
+    </body>
+</html>

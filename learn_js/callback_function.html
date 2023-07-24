@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Callback Function in JavaScript</title>
+    </head>
+    <body>
+        <script>
+
+            function getDetail(data, callbackFunction){ // prototype
+                
+                /* 
+                    there is a two way to return data from function 
+                    1. using return
+                    2. using callback function
+                */
+                
+                var response = 'My first name is '+data.firstname+' and my last name is '+data.lastname;
+
+                /* using callback function */
+                callbackFunction(response);
+
+                /* using return */
+                return response;
+            }
+            
+            var callbackRes = getDetail({'firstname':'Agrim','lastname':'sahgal'}, function(res){ // callback function
+                
+                console.log('response using callback function: '+res);    
+            });
+            console.log('response using return keyword: '+callbackRes);
+        </script>
+    </body>
+</html>

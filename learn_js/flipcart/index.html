@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Flipcart</title>
+    </head>
+    <body>
+        <script>
+            function createPageElement(elmt){
+                return document.createElement(elmt);
+            }
+            function setAttributeFromObject(elmt,obj,html = false){
+                for(key in obj){
+                    elmt.setAttribute(key, obj[key]);
+                    if(html){
+                        elmt.innerHTML = html;
+                    }
+                }
+                return elmt;
+            }
+            function selector(elmt){
+                return document.querySelector(elmt);
+            }
+            function createPagelinks(type,array,toHead = true){
+                array.forEach(function(item, index){
+
+                    if(type == 'style'){
+                        var link = createPageElement('link');
+                        for (key in item) {
+                            link.setAttribute(key,item[key]);
+                        }
+                        //console.log(link);
+                        if(toHead){
+                            createHeadElement(link);
+                        }
+                        else{
+                            createBodyElement(link);
+                        }
+                    }
+                    else{
+                        // for script
+                        var script = createPageElement('script');
+                        for (key in item) {
+                            script.setAttribute(key,item[key]);
+                        }
+                        //console.log(script);
+                        if(toHead){
+                            createHeadElement(script);
+                        }
+                        else{
+                            createBodyElement(script);
+                        }
+                    }
+                });
+            }
+            function createHeadElement(elmt){
+                document.head.append(elmt);
+            }
+            function createBodyElement(elmt){
+                document.body.append(elmt);
+            }
+            function applyStyleToElement(selector,styleObject){
+                 for (const key in styleObject) {
+                    document.querySelector(selector).style[key] = styleObject[key];
+                }
+            }
+
+            var createElmt = {
+                createElement:function(elmt){
+                    return document.createElement(elmt);
+                }
+            }; 
+
+            var pageLinks = [
+                {
+                    'rel':'stylesheet',
+                    'href':"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+                },
+                {
+                    'rel':'stylesheet',
+                    'href':"../flipcart/css/styles.css"
+                }
+            ];
+            var pageScripts = [
+                { 
+                    'src':"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+                },
+                { 
+                    'src':"../flipcart/js/main.js" 
+                }
+            ];
+            createPagelinks('style',pageLinks,true);
+            
+            var header = createPageElement('header');
+            var header_txt = '';
+            header = setAttributeFromObject(header,{'class':'main_header'},header_txt);
+            //console.log(header);
+
+            var header_top = createPageElement('div');
+            //var header_top_txt = 'Header Top';
+            header_top = setAttributeFromObject(header_top,{'class':'header_top'},false);
+            //console.log(header_top);
+
+            var header_top_inner = createPageElement('div');
+            header_top_inner = setAttributeFromObject(header_top_inner,{'class':'header_top_inner'},false);
+            
+            var logo = createPageElement('h3');
+            logo.innerHTML = 'Flipkart';
+            logo.style.color = 'white';
+
+            var header_bottom = createPageElement('div');
+            //var header_bottom_txt = 'Header Bottom';
+            header_bottom = setAttributeFromObject(header_bottom,{'class':'header_bottom'},false);
+            
+            var header_bottom_inner = createPageElement('div');
+            header_bottom_inner = setAttributeFromObject(header_bottom_inner,{'class':'header_bottom_inner'});
+            // console.log(header_bottom_inner);
+
+            document.body.append(header);
+            selector('.main_header').appendChild(header_top);
+            selector('.main_header').appendChild(header_bottom);
+    
+            applyStyleToElement('.header_top',{'backgroundColor':'#2874F0','height':'58px'});
+            //selector('.header_top').style.backgroundColor = '#2874F0';
+            //selector('.header_top').style.height = '58px';
+            
+            selector('.header_top').appendChild(header_top_inner);
+            selector('.header_top_inner').appendChild(logo);
+            selector('.header_top_inner').classList.add('container');
+            applyStyleToElement('.header_top_inner',{'height':'100%'});
+
+            // document.querySelector('.nav-link').style.color = '#fff';
+
+            // selector('.header_top_inner').style.border = '1px solid red';
+            applyStyleToElement('.header_top_inner',{'display':'flex','alignItems':'center'});
+            
+            applyStyleToElement('.header_bottom',{'height':'111px','borderBottom':'1px dotted #999'});
+            selector('.header_bottom').appendChild(header_bottom_inner);    
+            selector('.header_bottom_inner').classList.add('container');
+            selector('.header_bottom_inner').style.height = '100%';
+            applyStyleToElement('.header_bottom_inner',{'height':'100%'});
+            //selector('.header_bottom_inner').style.border = '1px solid green';
+            
+            // lets create navigations
+
+            var ul = createPageElement('ul');
+            ul.setAttribute('class','nav');
+            
+            
+            //console.log(createElmt.createElement('li'));
+
+            for (let index = 0; index < 4; index++) {
+                //console.log(createElmt.createElement('li'));
+                var l = createElmt.createElement('li');
+                var a = createElmt.createElement('a');
+                a.classList.add('nav-link');
+
+                if(index == 0){
+                    a.classList.add('active');
+                }
+                a.textContent = 'Hello '+index;
+
+                a.setAttribute('href','#');
+                l.append(a);
+                l.setAttribute('class','nav-item');
+                ul.append(l);
+            }
+
+            console.log(ul);
+
+            document.querySelector('.header_top_inner').append(ul);
+            var links = document.querySelectorAll('.nav-link');
+            links.forEach(function(currentSelector, index, links){
+                currentSelector.style.color = 'white';
+            });
+			
+			document.querySelector('.header_top_inner > ul.nav > li:nth-child(2) a').remove();
+			
+			var myAnchor = `<a class="nav-link" href="https://www.google.com" style="color:red;">My Custom Link</a>`;
+			
+			document.querySelector('.header_top_inner > ul.nav > li:nth-child(2)').innerHTML = myAnchor;
+	
+            createPagelinks('script',pageScripts,false);
+        </script>        
+    </body>
+</html>

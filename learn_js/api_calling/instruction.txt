@@ -1,0 +1,18 @@
+Api calling in JavaScript
+
+1. create object form XMLHttpRequest()
+It is a predefined build is class of JavaScript
+
+let xhr = new XMLHttpRequest();
+
+2. pass data in the class using open method
+
+xhr.open(methodName, URL);
+
+3. send the data
+
+xhr.send();
+
+4. xhr.onload = function(){
+    xhr.responseText; // it is a response from URL
+}

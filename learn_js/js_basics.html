@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>jS basics</title>
+    </head>
+    <body>
+        <div class="parent">
+            Parent
+            <div class="child">
+                Child
+                <div class="grand_child gc1">Grand Child 1</div>
+                <div class="grand_child gc2">Grand Child 2</div>
+            </div>
+        </div>
+		
+		<div class="myCars" style="margin-top:20px;">
+			<label><strong>Cars</strong></label>
+			<ul id="cars">
+				<li>Maruti</li>
+				<li>Hunadi</li>
+			</ul>
+			<button onclick="addNewCar();">Add Car</button>
+		</div>
+
+        <script>
+            /* 
+                closest() in javaScript 
+                find the parent element in javaScript
+            */
+            var gc = document.querySelector('.grand_child');
+            //console.log(gc);
+            gc.style.backgroundColor = 'blue';
+            gc.closest('.child').style.backgroundColor = 'green';
+            gc.closest('.parent').style.backgroundColor = 'red';
+
+            var cld_emt = document.querySelectorAll('.grand_child');
+            cld_emt.forEach(function(currentSelector, index, arr){
+                currentSelector.style.color = 'white';
+            });
+            //console.log(cld_emt);
+            //cld_emt.style.color = 'white';
+
+            /* 
+                Generate unorderd list
+            */
+            
+            var ul = document.createElement('ul');
+            document.body.appendChild(ul);
+            
+            /* create 5 li's in ul */
+            for (let i = 0; i < 5; i++) {
+                var li = document.createElement('li');
+                li.setAttribute('class','my_li');
+                
+                var textNode = document.createTextNode('This is myli '+(i+1));
+                li.appendChild(textNode);
+                ul.appendChild(li);
+            }
+
+            var object = document.getElementsByClassName('my_li');
+            //console.log(typeof object);
+            //console.log(object);
+
+            /* Note: forEach doesn't work on object so we need to use forIn */
+
+            for (var p in object) {
+                //console.log(object[p]);
+                if( !isNaN(p) ){
+                    object[p].style.color = 'orange';
+                }
+            }
+
+            var obj = {
+                'name' : 'Agrim',
+                "surname" : 'Sahgal',
+                address : "Manasa",
+                getName: function(){
+                    return this.name+' '+this.surname;
+                },
+                getAddress: function(){
+                    return this.address;
+                }
+            };
+            console.log(obj);
+
+            /* Get the properties from the javaScript object */
+            /* A dot(.) is a member selection operator */
+            /* fatArrow function doesn't work in js object */
+
+            // 1. object.property
+            console.log(obj.name);
+
+            // object["property"]
+            console.log(obj["surname"]);
+
+            // object[expression]
+            var add = 'address';
+            console.log(obj[add]);
+
+            console.log(obj.getName());
+            console.log(obj.getAddress());
+
+            /* delete the object property */
+            /* syntex : delete object.property */
+
+            var myObj = {
+                name: 'agrim',
+                surname : 'sahgal',
+                age : '30'
+            };
+            console.log(myObj);
+            console.log('before delete age',myObj.age);
+            delete myObj.age;
+            console.log('after delete age',myObj.age);
+            console.log(myObj);
+			
+			
+			/* js insertBefore and childNode */
+			
+			/* check unique element from array and after insertBefore to parent */
+			/*
+				1. array.find
+				2. array.push
+			*/
+			
+			/* JellyFish theme for vs code */
+			
+			var cars = [];
+			console.log(cars);
+			
+			function addNewCar(){
+				var cn = prompt('Insert Car name');
+				var li = document.createElement('li');
+				li.append(cn);
+				//console.log(li);
+				console.log(cars);
+				
+				var parentNode = document.getElementById("cars");
+				//console.log(parentNode);
+				//console.log(parentNode.childNodes[1]);
+				//node.insertBefore(new, existing)
+				
+				var is_available = false;
+				is_available = cars.find(function(currentValue, index, cars){
+					return (currentValue === cn) ? true : false; // Ternory operator
+				});
+				
+				if(is_available){
+					//available : do nothing
+				}
+				else{
+					cars.push(cn);
+					parentNode.insertBefore(li, document.querySelector('#cars li:first-child'));
+				}
+			}
+			
+        </script>
+    </body>
+</html>

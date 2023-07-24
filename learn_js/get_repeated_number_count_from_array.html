@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Get repeated number count from array</title>
+        <script>
+            var arr = [1,2,4,5,22,1,4,6,9,3,3,4,23,19,5];
+			/*
+				{
+					p:v,
+					1:1,
+					2:1,
+					4:3,
+					5:2
+				}
+				iterate array be forEach
+				iterate object by forIn
+			*/
+			
+			var obj = {};
+			/* check is object is empty or not */
+			/*
+				1. Object.keys(myEmptyObj).length === 0
+			*/
+			
+			arr.forEach(function(currentValue,index,arr){
+				//console.log(currentValue);
+				
+				if(Object.keys(obj).length === 0){
+					//console.log('obj is empty');
+					
+					obj[currentValue] = 1;
+				}
+				else{
+					//console.log('obj has value');
+					
+					for(var key in obj){
+						//console.log(typeof key);
+						/* type of key is an string so we need to convert this key into number */
+						key = parseInt(key);
+						if(key == currentValue){
+							obj[key] = obj[key] + 1;
+						}
+						
+						if(!obj.hasOwnProperty(currentValue)){
+							obj[currentValue] = 1;
+						}
+					}
+				}
+				
+				
+				
+			});
+			
+			console.log(obj);
+			
+        </script>
+    </head>
+    <body>
+        <script>
+            
+        </script>
+    </body>
+</html>

@@ -47,9 +47,25 @@
 			
 			var f = document.createElement('footer');
 			document.body.appendChild(f);
-			f.innerHTML = 'Footer';
-			document.querySelector('footer').setAttribute('class','small_div');
-			
+			//f.innerHTML = 'Footer';
+			var fs = document.querySelector('footer');
+			fs.setAttribute('class','small_div');
+			// document.querySelector('footer').appendChild('div');
+			var footer_heading = document.createElement('div');
+			footer_heading.setAttribute('class','ft_heading');
+			footer_heading.innerHTML = 'Footer';
+			f.appendChild(footer_heading);
+
+			var btn = document.createElement('button');
+			btn.innerHTML = 'Click Here';
+			fs.appendChild(btn);
+
+			btn.addEventListener('click', function(){
+				//alert('clicked');
+				h.style.backgroundColor = '#e9e9e9';
+				f.style.backgroundColor = '#e9e9e9';
+			});
+
 			var sd = document.querySelectorAll('.small_div');
 			for(let i = 0; i<sd.length; i++){
 				sd[i].style.color = 'green';
@@ -58,22 +74,51 @@
 				sd[i].style.border = '2px solid #999';
 				sd[i].style.textAlign = 'center';
 				sd[i].style.width = '100%';
-				sd[i].style.height = '80px';
+				//sd[i].style.minheight = '80px';
 				sd[i].style.lineHeight = '80px';
 			}
 			
 			var asd = document.querySelectorAll('.aside_div');
-			for(let j = 0; j<asd.length; j++){
-				asd[j].style.color = 'green';
-				asd[j].style.fontSize = '2em';
-				asd[j].style.marginBottom = '10px';
-				asd[j].style.border = '2px solid #999';
-				asd[j].style.textAlign = 'center';
-				asd[j].style.width = '25%';
-				asd[j].style.height = '400px';
-				asd[j].style.lineHeight = '400px';
-				asd[j].style.display = 'inline-block';
-			}
+			asd.forEach(function(item, index){
+				asd[index].style.color = 'green';
+				asd[index].style.fontSize = '2em';
+				asd[index].style.marginBottom = '10px';
+				asd[index].style.border = '2px solid #999';
+				asd[index].style.textAlign = 'center';
+				asd[index].style.width = '25%';
+				asd[index].style.height = '400px';
+				asd[index].style.lineHeight = '400px';
+				asd[index].style.display = 'inline-block';
+			});
+
+
+			/* 
+				JavaScript Hoisting 
+				https://www.w3schools.com/js/js_hoisting.asp
+				Hoisting is JavaScript's default behavior of moving declarations to the top.
+				A variable can be used before it has been declared. 
+			*/
+
+			x = 5; // initialization / assign 5 to x
+			console.log(x);
+			var x; // declaration
+
+			/* add font awesome in page using pure javascript */
+
+			var i = document.createElement('i');
+			i.setAttribute('class','fas');
+			i.classList.add('fa-home');
+			console.log(i);
+
+			section.appendChild(i);
+
+			let fa_link = document.createElement('link');
+			console.log(fa_link);
+			fa_link.setAttribute('rel','stylesheet');
+			fa_link.setAttribute('href','https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+			
+			document.head.appendChild(fa_link);
+
         </script>
     </body>
 </html>

@@ -16,3 +16,28 @@ xhr.send();
 4. xhr.onload = function(){
     xhr.responseText; // it is a response from URL
 }
+
+--------------------------------------------------------
+
+vi filename
+vi index.html
+
+i
+
+type anything
+
+esc: wq enter = save
+-----------------------------------------------------------
+
+swagger : api documentation and testing tool
+
+Api Calling techniques
+
+1. Build In JS techniques
+    a. XMLHttpRequest class (JS build in class)
+    b. fetch Api
+
+2. Third party techniques
+    a. Jquery
+    b. Axios
+

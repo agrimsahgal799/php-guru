@@ -5,32 +5,195 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        <style>
+            body{
+                /* padding: 15px; */
+                position: relative;
+            }
+             .page-loader{
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                background: transparent;
+                background-color: #e5dfdf;
+                opacity: 0.5;
+            }
+            .btn-wrap, .table-responsive{
+                padding: 1rem;
+            }
+        </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
     </head>
     <body>
-        <script>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Cover Photos</h1>
+                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group myList list-group-flush">
+                            <li class="list-group-item"></li>
+                            <li class="list-group-item"></li>
+                            <li class="list-group-item"></li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            var prObj = new Promise(function(resolve,reject){
-                $.ajax({
-                    url : 'https://jsonplaceholder.typicode.com/todos',
-                    type : 'GET',
-                    success:function(result,xhr,status){
-                        resolve(result);
-                    },
-                    error:function(xhr,status,error){
-                        reject(error);
-                    }
+        <div class="page-loader d-flex justify-content-center align-items-center myloader invisible">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div class="btn-wrap">
+            <button id="getPhotos" class="btn btn-success">Get Photos</button>
+        </div>
+        <div class="table-responsive">
+
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        <script>
+            var loader  = document.querySelector('.myloader');
+            var targetBtn = document.querySelector('button#getPhotos');
+
+            targetBtn.addEventListener('click', function(e){
+                
+                targetBtn.setAttribute('disabled','disabled');
+
+                var prObj = new Promise(function(resolve,reject){
+                    $.ajax({
+                        url : 'https://fakerestapi.azurewebsites.net/api/v1/CoverPhotos',
+                        type : 'GET',
+                        beforeSend:function(){
+                            loader.classList.remove('invisible');
+                        },
+                        success:function(result,xhr,status){
+                            targetBtn.removeAttribute('disabled');
+                            resolve(result);
+                        },
+                        error:function(xhr,status,error){
+                            reject(error);
+                        },
+                        complete:function(){
+                            loader.classList.add('invisible');
+                        }
+                    });
+                });
+
+                prObj.then(function(res){
+                    // console.log(res);
+                    var data = `<table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">ID Book</th>
+                                            <th scope="col">URL</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                <tbody>`;
+                        res.forEach(element => {
+                        // console.log(element);
+                        data += `<tr>
+                                    <td>`+element.id+`</td>
+                                    <td>`+element.idBook+`</td>
+                                    <td><a href="`+element.url+`" target="_blank">Link</a></td>
+                                    <td>
+                                        <button class="btn btn-success btn-sm view_btn" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>
+                                        <button class="btn btn-danger btn-sm delete_btn">Delete</button>
+                                    </td>
+                                </tr>`;
+                    });
+
+                    data+=`</tbody>
+                        </table>`;
+
+                    // console.log(data);
+                    document.querySelector('.table-responsive').innerHTML = data;
+
+                    /*
+                        addEventListener does not working on dynamically created elements.
+                        so we can call on document.addEventListener
+                        and check the button event by e.target method
+                    */
+
+                    document.addEventListener('click',function(e){
+
+                        if(e.target.classList.contains('view_btn')){
+                            
+                            var elmt = e.target.closest('tr');
+                            var listElmt = document.querySelector('.myList');
+                            var id = elmt.querySelector('td:first-child').innerHTML;
+                            listElmt.querySelector('li:first-child').innerHTML = id;
+
+                            var idBook = elmt.querySelector('td:nth-child(2)').innerHTML;
+                            listElmt.querySelector('li:nth-child(2)').innerHTML = idBook;
+
+                            var url = elmt.querySelector('td:nth-child(3) > a').getAttribute('href');
+                            listElmt.querySelector('li:nth-child(3)').innerHTML = url;
+
+                            // console.log(url);
+
+                        }
+
+                        if(e.target.classList.contains('delete_btn')){
+                            
+                            if (confirm("Are you realy want to delete!")) {
+                               
+                                var tr = e.target.closest('tr');
+                                var delid = tr.querySelector('td:first-child').innerHTML;
+                                /* call the delete api */
+                                targetBtn.setAttribute('disabled','disabled');
+                                $.ajax({
+                                    url : 'https://fakerestapi.azurewebsites.net/api/v1/CoverPhotos/'+delid,
+                                    type: 'DELETE',
+                                    beforeSend:function(){
+                                        loader.classList.remove('invisible');
+                                    },
+                                    success:function(result,xhr,status){
+                                        
+                                        loader.classList.add('invisible');
+                                        targetBtn.removeAttribute('disabled');
+
+                                        // console.log(result);
+                                        console.log(status.status);
+                                        if(status.status == 200){
+                                            alert('deleted');
+                                            tr.remove();
+                                        }
+                                        else{
+                                            alert('error');
+                                        }
+                                    },
+                                    error:function(xhr,status,error){
+                                        
+                                    },
+                                    complete:function(){
+                                        loader.classList.add('invisible');
+                                    }
+                                });
+
+                            } else {
+                                return false;
+                            }
+                        }
+                    });
+
+                }).catch(function(error){   
+                    console.log(error);
                 });
             });
 
-            prObj.then(function(res){
-                console.log('second: ',res);
-            }).catch(function(error){   
-                console.log(error);
-            });
-
-            
         </script>
     </body>
 </html>

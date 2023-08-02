@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Api Calling using fetch API</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            body{
+                /* padding: 15px; */
+                position: relative;
+            }
+            .content{
+                padding: 15px;
+            }
+            .page-loader{
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                background: transparent;
+                background-color: #e5dfdf;
+                opacity: 0.5;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="content">
+            <button id="myBtn" class="btn btn-success">Get Data</button>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+
+            function getUsers(url,obj = {method:'GET'}){
+                //toastr.success('here');
+
+                return new Promise(function(resolve,reject){
+
+                    let xhr = new XMLHttpRequest();
+                    xhr.open(obj.method,url);
+                    xhr.send();
+
+                    xhr.onreadystatechange = function(){
+                        /*
+                            rules: xhr.readyState == 4 and xhr.status == 200
+                        */
+                        if(xhr.readyState == 4 && xhr.status == 200){
+                            resolve(JSON.parse(xhr.responseText));
+                        }
+                        if(xhr.status != 200){
+                            reject('error');
+                        }
+                    }
+                });
+            }
+
+            document.getElementById('myBtn').addEventListener('click', function(){
+                // toastr.success('ok');
+                /*
+                    Fetch Api syntex
+                    fetch().then().then().catch().finally();
+                */
+
+                /* call api by predefined syntex */
+
+                var baseURL = "https://fakerestapi.azurewebsites.net";
+
+                fetch(baseURL+'/api/v1/Users')
+                .then(response => response.json())
+                .then(data => {
+                    /* normally data is returned in array of object */
+                    console.log(data);
+                })
+                .catch(error => {
+                    //console.log(error);
+                });
+
+                /* create your custom fetch api */
+
+                getUsers(baseURL+'/api/v1/Users')
+                .then(data => {
+                    //console.log(data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            });
+        </script>
+    </body>
+</html>

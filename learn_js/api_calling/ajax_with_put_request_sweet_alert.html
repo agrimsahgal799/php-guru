@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <style>
+            body{
+                /* padding: 15px; */
+                position: relative;
+            }
+             .page-loader{
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                background: transparent;
+                background-color: #e5dfdf;
+                opacity: 0.5;
+            }
+            .btn-wrap, .table-responsive{
+                padding: 1rem;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Book</h1>
+                        <button type="button" class="btn-close" id="close-popup" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                              <label for="title" class="form-label">Title</label>
+                              <input type="text" class="form-control" id="title" aria-describedby="title">
+                            </div>
+                            <div class="mb-3">
+                              <label for="description" class="form-label">Description</label>
+                              <textarea class="form-control" id="description" rows="5" aria-describedby="description"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="excerpt" class="form-label">Excerpt</label>
+                                <textarea class="form-control" id="excerpt" rows="5" aria-describedby="excerpt"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="page_count" class="form-label">Page Count</label>
+                                <input type="number" class="form-control" id="page_count" aria-describedby="page_count">
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="edit-book">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-loader d-flex justify-content-center align-items-center myloader invisible">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div class="btn-wrap">
+            <button id="getBooks" class="btn btn-success">Get Books</button>
+        </div>
+        <div class="table-responsive">
+
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        <!-- 
+            sweet alert 
+            https://sweetalert2.github.io/
+        -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        
+        <script>
+        
+            /*
+            function hideModel(){
+                let myModal = document.querySelector('#exampleModal');
+                myModal.classList.remove('show');
+                myModal.style.display = 'none';
+                myModal.removeAttribute('aria-modal');
+                myModal.setAttribute('aria-hidden','true');
+                document.body.classList.remove('modal-open');
+                document.body.setAttribute('style', '');
+                document.querySelector('.modal-backdrop').removeAttribute('show');
+                document.querySelector('.modal-backdrop').remove();
+            }
+            */
+
+            var myObj = {
+                url: "https://fakerestapi.azurewebsites.net",
+                type: "GET"
+            };
+        
+            var loader  = document.querySelector('.myloader');
+            var targetBtn = document.querySelector('button#getBooks');
+            var book_id = '';
+            var publishDate = '';
+
+            targetBtn.addEventListener('click', function(e){
+                
+                targetBtn.setAttribute('disabled','disabled');
+
+                var prObj = new Promise(function(resolve,reject){
+                    $.ajax({
+                        ...myObj,
+                        url : myObj.url + '/api/v1/Books',
+                        type : 'GET',
+                        beforeSend:function(){
+                            loader.classList.remove('invisible');
+                        },
+                        success:function(result,xhr,status){
+                            targetBtn.removeAttribute('disabled');
+                            resolve(result);
+                        },
+                        error:function(xhr,status,error){
+                            reject(error);
+                        },
+                        complete:function(){
+                            loader.classList.add('invisible');
+                        }
+                    });
+                });
+
+                prObj.then(function(res){
+                    console.log(res);
+                    var data = `<table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Title</th>
+                                            <th scope="col" width="20%">Description</th>
+                                            <th scope="col" width="20%">Excerpt</th>
+                                            <th scope="col">Page Count</th>
+                                            <th scope="col">Publish Date</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                <tbody>`;
+                        res.forEach(element => {
+                        // console.log(element);
+                        data += `<tr>
+                                    <td data-id="`+element.id+`">`+element.id+`</td>
+                                    <td>`+element.title+`</td>
+                                    <td>`+element.description+`</td>
+                                    <td>`+element.excerpt+`</td>
+                                    <td>`+element.pageCount+`</td>
+                                    <td>`+element.publishDate+`</td>
+                                    <td>
+                                        <button class="btn btn-success btn-sm edit_btn" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>
+                                        <button class="btn btn-danger btn-sm delete_btn">Delete</button>
+                                    </td>
+                                </tr>`;
+                    });
+
+                    data+=`</tbody>
+                        </table>`;
+
+                    // console.log(data);
+                    document.querySelector('.table-responsive').innerHTML = data;
+
+                    /*
+                        addEventListener does not working on dynamically created elements.
+                        so we can call on document.addEventListener
+                        and check the button event by e.target method
+                    */
+
+                    document.addEventListener('click',function(e){
+
+                        var target = e.target.closest('tr');
+
+                        if(e.target.classList.contains('edit_btn')){
+                            // console.log('edit');
+                            book_id = target.querySelector('td:first-child').getAttribute('data-id');
+                            let title = target.querySelector('td:nth-child(2)').innerHTML;
+                            let description = target.querySelector('td:nth-child(3)').innerHTML;
+                            let excerpt = target.querySelector('td:nth-child(4)').innerHTML;
+                            let pageCount = target.querySelector('td:nth-child(5)').innerHTML;
+                            publishDate = target.querySelector('td:nth-child(6)').innerHTML;
+                            // console.log(book_id);
+
+                            document.querySelector('#title').value = title;
+                            document.querySelector('#description').value = description;
+                            document.querySelector('#excerpt').value = excerpt;
+                            document.querySelector('#page_count').value = pageCount;
+                        }
+
+                        if(e.target.classList.contains('delete_btn')){
+                            
+                            if (confirm("Are you realy want to delete!")) {
+                               
+                                var book_id = target.querySelector('td:first-child').getAttribute('data-id');
+                             
+                                /* call the delete api */
+                                targetBtn.setAttribute('disabled','disabled');
+                                $.ajax({
+                                    ...myObj,
+                                    url : myObj.url + '/api/v1/Books/'+book_id,
+                                    type: 'DELETE',
+                                    beforeSend:function(){
+                                        loader.classList.remove('invisible');
+                                    },
+                                    success:function(result,xhr,status){
+                                        
+                                        loader.classList.add('invisible');
+                                        targetBtn.removeAttribute('disabled');
+
+                                        // console.log(result);
+                                        console.log(status.status);
+                                        if(status.status == 200){
+                                            // alert('deleted');
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: 'Deleted',
+                                                text: 'Book deleted successfully.',
+                                            })
+                                            target.remove();
+                                        }
+                                        else{
+                                            alert('error');
+                                        }
+                                    },
+                                    error:function(xhr,status,error){
+                                        
+                                    },
+                                    complete:function(){
+                                        loader.classList.add('invisible');
+                                    }
+                                });
+
+                            } else {
+                                return false;
+                            }
+                        }
+                    });
+
+                    // update the data
+                    document.querySelector('#edit-book').addEventListener('click', function(e){
+                        e.preventDefault();
+                        // swal.fire('okk');
+
+                        let title = document.querySelector('#title').value;
+                        let description = document.querySelector('#description').value;
+                        let excerpt = document.querySelector('#excerpt').value;
+                        let pageCount = document.querySelector('#page_count').value;
+
+                        var myData = {
+                            "id": 0,
+                            "title": title,
+                            "description": description,
+                            "pageCount": pageCount,
+                            "excerpt": excerpt,
+                            "publishDate" : publishDate 
+                        }
+
+                        $.ajax({
+                            ...myObj,
+                            url  : myObj.url + '/api/v1/Books/'+book_id,
+                            type : "PUT",
+                            data : JSON.stringify(myData),
+                            dateType: "JSON",
+                            contentType : "application/json",
+                            beforeSend:function(){
+                                document.getElementById('close-popup').click();
+                                loader.classList.remove('invisible');
+                            },
+                            success:function(result,status,xhr){
+                                loader.classList.add('invisible');
+                                if(status == 'success'){
+                                    
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Success',
+                                        text: 'Book updated successfully.',
+                                    })
+                                }
+                                else{
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Failed',
+                                        text: 'Something went wrong!',
+                                    })
+                                }
+                            },
+                            error:function(xhr,status,error){
+                                console.log(error);
+                            }
+                        });
+
+                    });
+                    
+                }).catch(function(error){   
+                    console.log(error);
+                });
+            });
+
+            
+
+        </script>
+    </body>
+</html>

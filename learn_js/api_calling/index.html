@@ -31,11 +31,8 @@
                 <span class="visually-hidden">Loading...</span>
             </div>
         </div>
-        
         <div class="content">
-
             <h3 class="mb-4">Api calling using JavaScript</h3>
-
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -52,9 +49,7 @@
                 </table>
             </div>
         </div>
-
         <script>
-
             function getDumyPhotos(method,url,callbackFun){
 
                 let xhr = new XMLHttpRequest();
@@ -70,22 +65,14 @@
 
             getDumyPhotos("GET","https://jsonplaceholder.typicode.com/photos",function(response){ // callback function
                 /* response is a JSON string do we need to convert this JSON string into JSON object */
-
                 document.querySelector('.page-loader').remove();
-
                 response = JSON.parse(response);
                 //console.log(response);
 
                 var tbody = document.querySelector('.table > tbody');
-	
-	
 				var myTr = '';
                 response.forEach(function(item,index,response){
-					
-					
-					
 					if(index < 5){
-					
 						var tr = document.createElement('tr');
 						
 						var td1 = document.createElement('td');
@@ -105,7 +92,6 @@
 						var td5 = document.createElement('td');
 						td5.innerHTML = item.url;
 						
-
 						tr.appendChild(td1);
 						tr.appendChild(td2);
 						tr.appendChild(td3);
@@ -113,30 +99,22 @@
 						tr.appendChild(td5);
 
 						tbody.appendChild(tr);
-					
 					}
 					
 					if( index > 4 && index < 10){
 						//console.log(index);
-						
 						myTr = myTr + `<tr>
 							<td>`+item.id+`</td>
 							<td>`+item.albumId+`</td>
 							<td>`+item.thumbnailUrl+`</td>
 							<td>`+item.title+`</td>
 							<td>`+item.url+`</td>
-						 </tr>`;
-						 
+						</tr>`;
 					}
-
-                });
-				
+                });		
 				//console.log(myTr);
-				
 				//tbody.innerHTML = myTr;
-				
             });
-
         </script>
     </body>
 </html>

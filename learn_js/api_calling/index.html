@@ -72,48 +72,49 @@
                 var tbody = document.querySelector('.table > tbody');
 				var myTr = '';
                 response.forEach(function(item,index,response){
-					if(index < 5){
-						var tr = document.createElement('tr');
-						
-						var td1 = document.createElement('td');
-						td1.innerHTML = item.id;
-						
-						var td2 = document.createElement('td');
-						td2.innerHTML = item.albumId;
-						
-						var td3 = document.createElement('td');
-						var img = document.createElement('img');
-						img.setAttribute("src",item.thumbnailUrl); 
-						td3.appendChild(img);
-
-						var td4 = document.createElement('td');
-						td4.innerHTML = item.title;
-						
-						var td5 = document.createElement('td');
-						td5.innerHTML = item.url;
-						
-						tr.appendChild(td1);
-						tr.appendChild(td2);
-						tr.appendChild(td3);
-						tr.appendChild(td4);
-						tr.appendChild(td5);
-
-						tbody.appendChild(tr);
-					}
+			if(index < 5){
+				var tr = document.createElement('tr');
+				
+				var td1 = document.createElement('td');
+				td1.innerHTML = item.id;
+				
+				var td2 = document.createElement('td');
+				td2.innerHTML = item.albumId;
+				
+				var td3 = document.createElement('td');
+				var img = document.createElement('img');
+				img.setAttribute("src",item.thumbnailUrl); 
+				td3.appendChild(img);
+	
+				var td4 = document.createElement('td');
+				td4.innerHTML = item.title;
+				
+				var td5 = document.createElement('td');
+				td5.innerHTML = item.url;
+				
+				tr.appendChild(td1);
+				tr.appendChild(td2);
+				tr.appendChild(td3);
+				tr.appendChild(td4);
+				tr.appendChild(td5);
+	
+				tbody.appendChild(tr);
+			}
 					
-					if( index > 4 && index < 10){
-						//console.log(index);
-						myTr = myTr + `<tr>
-							<td>`+item.id+`</td>
-							<td>`+item.albumId+`</td>
-							<td>`+item.thumbnailUrl+`</td>
-							<td>`+item.title+`</td>
-							<td>`+item.url+`</td>
-						</tr>`;
-					}
+			if( index > 4 && index < 10)
+			{
+				//console.log(index);
+				myTr = myTr + `<tr>
+					<td>`+item.id+`</td>
+					<td>`+item.albumId+`</td>
+					<td>`+item.thumbnailUrl+`</td>
+					<td>`+item.title+`</td>
+					<td>`+item.url+`</td>
+				</tr>`;
+			}
                 });		
-				//console.log(myTr);
-				//tbody.innerHTML = myTr;
+		//console.log(myTr);
+		//tbody.innerHTML = myTr;
             });
         </script>
     </body>

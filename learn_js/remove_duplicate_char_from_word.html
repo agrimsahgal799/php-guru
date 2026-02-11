@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let word = "Heellow";
+        const newStr = removeDuplicates(word);
+        console.log(newStr);
+        
+        function removeDuplicates(str){
+            let seen = {};
+            let string = "";
+            for(char of str){
+                if(!seen[char]){
+                    string+=char;
+                    seen[char] = true;
+                }
+            }
+            return string;
+        }
+    </script>
+</body>
+</html>

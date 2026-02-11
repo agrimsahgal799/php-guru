@@ -1,0 +1,27 @@
+<script>
+    
+    // use of Nullish coalescing operator (??)
+    function showMSG(marks){
+        const message = marks ?? "absent";
+        console.log(`marks ${message}`);
+    }
+    showMSG(0)
+
+    // use strict
+    function sum(num1, num2){
+        "use strict"
+        num1 = 100;
+        num2 = 200;
+        return arguments[0]+arguments[1];
+    }
+    console.log(sum(10, 20))
+
+    // array to string
+    let arr = ['a','b','c'];
+    let obj = arr.reduce(
+        (a, it, i) => ({...a, [i]:it}), {}
+    )
+    console.log(obj);
+
+
+</script>

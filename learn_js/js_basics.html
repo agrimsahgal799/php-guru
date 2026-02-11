@@ -132,28 +132,38 @@
 			
 			function addNewCar(){
 				var cn = prompt('Insert Car name');
-				var li = document.createElement('li');
-				li.append(cn);
-				//console.log(li);
-				console.log(cars);
-				
-				var parentNode = document.getElementById("cars");
-				//console.log(parentNode);
-				//console.log(parentNode.childNodes[1]);
-				//node.insertBefore(new, existing)
-				
-				var is_available = false;
-				is_available = cars.find(function(currentValue, index, cars){
-					return (currentValue === cn) ? true : false; // Ternory operator
-				});
-				
-				if(is_available){
-					//available : do nothing
-				}
-				else{
-					cars.push(cn);
-					parentNode.insertBefore(li, document.querySelector('#cars li:first-child'));
-				}
+                // console.log(cn);
+
+                if (cn === null || cn.trim() === "") {
+                    alert("You didn't enter anything.");
+                } else {
+                    var li = document.createElement('li');
+                    li.append(cn);
+                    // console.log(li);
+                    // console.log(cars);
+                    
+                    var parentNode = document.getElementById("cars");
+                    //console.log(parentNode);
+                    //console.log(parentNode.childNodes[1]);
+                    //node.insertBefore(new, existing)
+                    
+                    var is_available = false;
+                    is_available = cars.find(function(currentValue, index, cars){
+                        alert('asdas');
+                        console.log(currentValue);
+                        //return (currentValue === cn) ? true : false; // Ternory operator
+                    });
+
+                    // return false;
+                    
+                    if(is_available){
+                        //available : do nothing
+                    }
+                    else{
+                        cars.push(cn);
+                        parentNode.insertBefore(li, document.querySelector('#cars li:first-child'));
+                    }
+                }
 			}
 			
         </script>

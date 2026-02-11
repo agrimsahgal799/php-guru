@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+        div{
+            width: 200px;
+            height: 200px;
+            border: 1px solid #000;
+            margin-bottom: 10px;
+            transition: all 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+    <input type="text">
+
+    <script>
+        let box = document.querySelector("div");
+        const input = document.querySelector("input");
+
+        input.addEventListener("input", ()=>{
+            box.style.background = input.value;
+            box.style.borderRadius = input.value;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let arr = [1,0,4,5,0,12,0,8,7];
+        let index = 0;
+        for(let i=0; i<arr.length; i++){
+            if(arr[i]!==0){
+                arr[index] = arr[i];
+                index++;
+            }
+        }
+        /* after first loop now index value is 6 */
+        console.log('index now', index);
+        for(let j=index; j<arr.length; j++){
+            console.log(j, index);
+            arr[j] = 0;
+        }
+        console.log(arr);
+    </script>
+</body>
+</html>

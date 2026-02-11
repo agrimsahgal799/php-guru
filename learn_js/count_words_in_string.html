@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let str = "Welcome to the  Javascript Learning tutorial";
+        let count = 0;
+        let isWord = false;
+        for(let i=0;i<str.length;i++){
+            if(str[i]!==" " && !isWord){
+                count++;
+                isWord = true;
+            }
+            else if(str[i] === " "){
+                isWord = false;
+            }
+        }
+        console.log(count);
+        document.body.append('String: ',str, document.createElement('br'), "Total word Count: "+count);
+    </script>
+</body>
+</html>

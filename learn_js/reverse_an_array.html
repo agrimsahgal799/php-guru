@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>Reverse an array and show updated Array</div>
+    <script>
+        let arr = [2, 33, 5, 23, 67, 22, 45, 7];
+        function reverseArr(data){
+            let temp = [];
+            for(i=data.length-1; i>=0; i--){
+                // console.log(data[i]);
+                temp.push(data[i]);
+            }
+            return temp;
+        }
+        let result = reverseArr(arr);
+        console.log(result);
+        document.body.append('Array: ', "["+arr+"]");
+        document.body.append(document.createElement('br'), 'Reverse Array: ', "["+result+"]");
+    </script>
+</body>
+</html>

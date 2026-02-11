@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Api Calling using async and await </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <style>
+            .content{
+                padding: 15px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="content">
+
+            <button id="myBtn" class="btn btn-success">Call Api</button>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        <script>
+			/*
+				Async functions always return a promise.
+				Async function suspend the execution until the returned promise is fulfilled or rejected. 
+				https://www.w3schools.com/js/js_async.asp
+			*/
+		
+            document.querySelector('button#myBtn').addEventListener('click', function(){
+                
+				async function getUsers(){
+					
+					try{
+						const response = await fetch("https://fakerestapi.azurewebsites.net/api/v1/Users");
+					
+						const result = await response.json();
+						console.log("Success:", result);
+					}
+					catch(error){
+						console.error("Error:", error);
+					}	
+				};
+	
+				getUsers();
+            });
+        </script>
+    </body>
+</html>

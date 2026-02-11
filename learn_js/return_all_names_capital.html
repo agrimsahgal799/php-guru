@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* Return only names in the uppercase */
+        const students = [
+            { name: 'Mukesh', rollNo: 10,  marks: 60},
+            { name: 'Rajesh', rollNo: 11,  marks: 65},
+            { name: 'Neeraj', rollNo: 8,  marks: 70},
+        ];
+        
+        // let names = [];
+        // for(let i=0; i<students.length; i++){
+        //     names.push(students[i].name.toUpperCase()); 
+        // }
+        
+        const names = students.map(stu => stu.name.toUpperCase());
+
+        console.log(names);
+    </script>
+</body>
+</html>

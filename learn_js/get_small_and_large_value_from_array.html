@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>Find smallest and largest value from array</div>
+    <script>
+        let data = [10, 40, 2, 6, 55, 70, 36];
+        let l = data[0];
+        let s = data[0];
+        for(let i=0;i<data.length;i++){
+            // console.log(data[i]);
+            if(data[i] > l){
+                l = data[i];
+            }
+            if(data[i] < s){
+                s = data[i];
+            }
+        }
+        document.body.append('Array: [', data, ']', document.createElement('br'));
+        document.body.append('smallest: ', s, document.createElement('br'), 'largest: ', l);
+    </script>
+</body>
+</html>
